@@ -1,28 +1,25 @@
 import { StrictMode } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 import { apolloClient } from "./apollo/apolloClient";
-import { CharactersPage } from "./characters/pages/CharactersPage";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import { AppRouter } from "./router/AppRouter";
 import "./index.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <CharactersPage />,
-  }
-]);
-
 root.render(
   <StrictMode>
-    <ApolloProvider client={apolloClient}>
-      <div className="h-screen overflow-hidden">
-        <RouterProvider router={router} />
-      </div>
-    </ApolloProvider>
+    <Provider store={store}>
+      <ApolloProvider client={apolloClient}>
+        <div className="h-screen overflow-hidden">
+          <RouterProvider router={AppRouter} />
+        </div>
+      </ApolloProvider>
+    </Provider>
   </StrictMode>
 );
