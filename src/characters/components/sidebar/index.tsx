@@ -13,6 +13,10 @@ const Sidebar: React.FC = () => {
         (state) => state.character.characters
     );
 
+    // Separar en favoritos y no favoritos
+    const favoriteCharacters = filteredCharacters.filter((character) => character.isReferred);
+    const nonFavoriteCharacters = filteredCharacters.filter((character) => !character.isReferred);
+
     const sortOrder = useAppSelector((state) => state.character.sort);
 
     //Search function
@@ -57,19 +61,35 @@ const Sidebar: React.FC = () => {
                 </button>
             </div>
 
-            <ul className="px-4 overflow-y-auto h-[calc(100vh-150px)] scrollbar-thin scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-500">
-                {filteredCharacters.map((character) => (
-                    <div key={character.id}>
-                        <li className="py-4 cursor-pointer hover:bg-[#EEE3FF] rounded-2xl px-5">
-                            <SidebarItem
-                                id={character.id}
-                                name={character.name}
-                                species={character.species}
-                                image={character.image}
-                            />
-                        </li>
-                        <hr className="w-full bg-black h-0.5" />
-                    </div>
+            {/* Lista de Favoritos */}
+            <h3 className="px-6 font-semibold mt-4">Starred Characters ({favoriteCharacters.length})</h3>
+            <ul className="px-4 overflow-y-auto max-h-[50vh] scrollbar-thin scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-500">
+                {favoriteCharacters.map((character) => (
+                <li key={character.id} className="py-4 cursor-pointer hover:bg-[#EEE3FF] rounded-2xl px-5">
+                    <SidebarItem
+                    id={character.id}
+                    name={character.name}
+                    species={character.species}
+                    image={character.image}
+                    isReferred={character.isReferred}
+                    />
+                </li>
+                ))}
+            </ul>
+
+            {/* Lista de No Favoritos */}
+            <h3 className="px-6 font-semibold mt-4">Characters ({nonFavoriteCharacters.length})</h3>
+            <ul className="px-4 overflow-y-auto max-h-[50vh] scrollbar-thin scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-500">
+                {nonFavoriteCharacters.map((character) => (
+                <li key={character.id} className="py-4 cursor-pointer hover:bg-[#EEE3FF] rounded-2xl px-5">
+                    <SidebarItem
+                    id={character.id}
+                    name={character.name}
+                    species={character.species}
+                    image={character.image}
+                    isReferred={character.isReferred}
+                    />
+                </li>
                 ))}
             </ul>
         </aside>

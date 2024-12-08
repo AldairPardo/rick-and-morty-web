@@ -6,6 +6,7 @@ export interface Character {
   image: string;
   status: string;
   species: string;
+  isReferred: boolean;
 }
 
 interface CharacterState {
@@ -51,10 +52,17 @@ export const characterSlice = createSlice({
         return nameB.localeCompare(nameA);
       });
     },
+    markAsFavorite: (state, action: PayloadAction<number>) => {
+      const characterIndex = state.characters.findIndex((character) => character.id === action.payload);
+      if (characterIndex !== -1) {
+        state.characters[characterIndex].isReferred = !state.characters[characterIndex].isReferred;
+        state.defaultCharacters = state.characters;
+      }
+    },
   },
 });
 
-export const { setCharacters, setActiveCharacter, sortCharacters } =
+export const { setCharacters, setActiveCharacter, sortCharacters, markAsFavorite } =
   characterSlice.actions;
 
 export default characterSlice.reducer;

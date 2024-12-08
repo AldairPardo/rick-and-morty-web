@@ -1,6 +1,6 @@
 import { AppThunk } from "../store";
-import { FILTER_CHARACTERS, GET_CHARACTER_BY_ID } from "../../graphql/queries";
-import { setActiveCharacter, setCharacters } from "./characterSlice";
+import { FILTER_CHARACTERS, GET_CHARACTER_BY_ID, TOGGLE_FAVORITE } from "../../graphql/queries";
+import { markAsFavorite, setActiveCharacter, setCharacters } from "./characterSlice";
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 
 export const startLoadingCharacters =
@@ -31,12 +31,28 @@ export const startSelectCharacter =
                 },
             });
 
-            console.log( 'response' , data );
-
             if (data && data.getCharacterById) {
                 dispatch(setActiveCharacter(data.getCharacterById));
             }
         } catch (error) {
             console.error("Error al cargar los personajes:", error);
+        }
+    };
+
+export const startToggleFavorite =
+(apolloClient: ApolloClient<NormalizedCacheObject>, { id }: { id: number }): AppThunk =>
+    async (dispatch) => {
+        try {
+            await apolloClient.mutate({
+                mutation: TOGGLE_FAVORITE,
+                variables: {
+                    characterId: id,
+                },
+            });
+
+            dispatch(markAsFavorite(id));
+
+        } catch (error) {
+            console.error("Error al marcar favorito:", error);
         }
     };

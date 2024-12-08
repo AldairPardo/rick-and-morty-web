@@ -37,3 +37,12 @@ export const GET_CHARACTER_BY_ID = gql`
         }
     }
 `;
+
+export const TOGGLE_FAVORITE = gql`
+    mutation Mutation($characterId: Int!) {
+        toggleFavorite(characterId: $characterId) {
+            isReferred
+            id
+        }
+    }
+`;
