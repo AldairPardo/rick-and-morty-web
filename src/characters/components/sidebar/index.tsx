@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { SearchBar } from "../filterBar";
 import { startLoadingCharacters } from "../../../store/character/thunks";
 import { apolloClient } from "../../../apollo/apolloClient";
+import { sortCharacters } from "../../../store/character/characterSlice";
 
 const Sidebar: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -12,13 +13,25 @@ const Sidebar: React.FC = () => {
         (state) => state.character.characters
     );
 
+    const sortOrder = useAppSelector((state) => state.character.sort);
+
     //Search function
     const handleSearch = (query: string) => {
         dispatch(startLoadingCharacters(apolloClient, { name: query }));
     };
 
+    //Sort function
+    const handleSort = (order: 'A-Z' | 'Z-A') => {
+        // If reselect the same order, reset the sort
+        if (sortOrder === order) {
+            dispatch(sortCharacters(null));
+        } else {
+            dispatch(sortCharacters(order));
+        }
+    };
+
     return (
-        <aside className="bg-gray-100 w-[375px] pt-0.5 ">
+        <aside className="bg-gray-100 w-[375px] pt-0.5">
             <h2 className="font-bold pt-10 text-2xl px-6 pb-2">
                 Rick and Morty list
             </h2>
@@ -26,6 +39,23 @@ const Sidebar: React.FC = () => {
             <SearchBar onSearch={
                 (query: string) => handleSearch(query)
             } />
+
+            {/* Botones de orden */}
+            <div className="flex justify-end px-6 py-4">
+                <span className="text-gray-400 mr-2 self-end">Sort:</span>
+                <button
+                    className={`px-4 py-0.5 rounded-l-lg ${sortOrder === 'A-Z' ? 'bg-purple-500 text-white' : 'bg-gray-200'}`}
+                    onClick={() => handleSort('A-Z')}
+                >
+                    A-Z
+                </button>
+                <button
+                    className={`px-4 py-0.5 rounded-r-lg ${sortOrder === 'Z-A' ? 'bg-purple-500 text-white' : 'bg-gray-200'}`}
+                    onClick={() => handleSort('Z-A')}
+                >
+                    Z-A
+                </button>
+            </div>
 
             <ul className="px-4 overflow-y-auto h-[calc(100vh-150px)] scrollbar-thin scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-500">
                 {filteredCharacters.map((character) => (
