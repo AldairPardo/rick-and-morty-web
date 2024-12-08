@@ -6,61 +6,73 @@ import { Character } from "../../store/character/characterSlice";
 import { startToggleFavorite } from "../../store/character/thunks";
 
 export const CharacterDetailView = ({
-    character,
-    onClose,
+  character,
+  onClose,
 }: {
-    character: Character;
-    onClose: () => void;
+  character: Character;
+  onClose: () => void;
 }) => {
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-    const toggleFavorite = () => {
-        dispatch(startToggleFavorite(apolloClient, { id: character.id }));
-    };
+  const toggleFavorite = () => {
+    dispatch(startToggleFavorite(apolloClient, { id: character.id }));
+  };
 
-    return (
-        <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-md p-6 w-full max-w-4xl mx-auto">
-            {/* Botón para cerrar */}
-            <button
-                onClick={onClose}
-                className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 focus:outline-none"
-                aria-label="Close"
-            >
-                ✕
-            </button>
+  return (
+    <div className="flex flex-col  rounded-lg   w-full ">
+      {/* Botón para cerrar */}
+      <button
+        onClick={onClose}
+        className="absolute top-2 cursor-pointer right-4 text-black hover:text-gray-600 focus:outline-none"
+        aria-label="Close"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
 
-            {/* Imagen del personaje */}
-            <div className="flex-shrink-0 mb-4 md:mb-0 md:mr-6 relative">
-                <img
-                    src={character.image}
-                    alt={character.name}
-                    className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-full"
-                />
-                {/* Ícono del corazón */}
-                <div
-                    onClick={toggleFavorite}
-                    className="absolute top-2 right-2 cursor-pointer h-10 w-10 flex items-center justify-center rounded-full bg-white shadow-md"
-                >
-                    {
-                        character.isFavorite ? <Heart /> : <HeartOutline />
-                    }
-                </div>
-            </div>
-
-            {/* Detalles del personaje */}
-            <div className="flex flex-col justify-center">
-                <h2 className="text-3xl font-bold text-gray-800 mb-2">
-                    {character.name}
-                </h2>
-                <ul className="text-gray-600 text-lg space-y-2">
-                    <li>
-                        <span className="font-semibold">Specie:</span> {character.species}
-                    </li>
-                    <li>
-                        <span className="font-semibold">Status:</span> {character.status}
-                    </li>
-                </ul>
-            </div>
+      {/* Imagen del personaje */}
+      <div className="relative mb-4 w-[75px] h-[75px] md:mb-0 md:mr-6 ">
+        <img
+          src={character.image}
+          alt={character.name}
+          className="w-[75px] h-[75px] object-cover rounded-full"
+        />
+        {/* Ícono del corazón */}
+        <div
+          onClick={toggleFavorite}
+          className="absolute  -bottom-1 -right-1 cursor-pointer h-8 w-8 flex items-center justify-center rounded-full bg-white shadow-md"
+        >
+          {character.isFavorite ? <Heart /> : <HeartOutline />}
         </div>
-    );
+      </div>
+
+      {/* Detalles del personaje */}
+      <div className="flex flex-col justify-center">
+        <h2 className="text-2xl font-bold text-gray-800 py-2">
+          {character.name}
+        </h2>
+        <ul className="text-gray-600 text-base">
+          <li className=" border-b py-4 border-[#E5E7EB] ">
+            <span className="font-semibold">Specie</span> <br />{" "}
+            {character.species}
+          </li>
+          <li className=" border-b py-4 border-[#E5E7EB] ">
+            <span className="font-semibold">Status</span>
+            <br /> {character.status}
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
 };

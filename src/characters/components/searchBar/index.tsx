@@ -8,7 +8,7 @@ export const SearchBar = ({
   onSearch,
 }: SearchBarProps) => {
   return (
-    <div className="relative p-4 w-full max-w-sm">
+    <div className="relative p-4 w-full ">
       <div className="absolute top-1/2 transform -translate-y-1/2 left-6 text-gray-400">
         <svg
           xmlns="http://www.w3.org/2000/svg"

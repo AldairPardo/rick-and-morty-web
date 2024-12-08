@@ -1,22 +1,22 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom';
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import CommentSection from "../characters/components/comments"; // Adjust the import path as necessary
+import CommentSection from "../characters/components/comments";
 import { startNewComment } from "../store/character/thunks";
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 
-// Mockear Redux hooks y acciones
-jest.mock("../../../hooks/redux", () => ({
+// Mock Redux hooks and actions
+jest.mock("../hooks/redux", () => ({
   useAppDispatch: jest.fn(),
   useAppSelector: jest.fn(),
 }));
 
-jest.mock("../../../store/character/thunks", () => ({
+jest.mock("../store/character/thunks", () => ({
   startNewComment: jest.fn(),
 }));
 
-// Mockear Apollo Client (si es necesario)
-jest.mock("../../../apollo/apolloClient", () => ({
+// Mock Apollo Client (if necessary)
+jest.mock("../apollo/apolloClient", () => ({
   apolloClient: {},
 }));
 
@@ -41,9 +41,7 @@ describe("CommentSection Component", () => {
 
   it("renders the comment section title", () => {
     render(<CommentSection />);
-    expect(
-      screen.getByText(/comments/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/comments/i)).toBeInTheDocument();
   });
 
   it("renders existing comments", () => {
@@ -61,13 +59,13 @@ describe("CommentSection Component", () => {
   it("dispatches startNewComment and clears input on submit", () => {
     render(<CommentSection />);
     const textarea = screen.getByPlaceholderText("Añadir un comentario...");
-    const button = screen.getByText(/comment/i);
+    const button = screen.getByRole('button', { name: /comment/i });  // Updated query
 
-    // Simular escritura
+    // Simulate typing
     fireEvent.change(textarea, { target: { value: "Nuevo comentario" } });
     expect((textarea as HTMLTextAreaElement).value).toBe("Nuevo comentario");
 
-    // Simular envío
+    // Simulate submitting the form
     fireEvent.click(button);
     expect(mockDispatch).toHaveBeenCalledWith(
       startNewComment({} as ApolloClient<NormalizedCacheObject>, { id: 1, comment: "Nuevo comentario" })
@@ -77,9 +75,9 @@ describe("CommentSection Component", () => {
 
   it("does not submit if the input is empty", () => {
     render(<CommentSection />);
-    const button = screen.getByText(/comment/i);
+    const button = screen.getByRole('button', { name: /comment/i });  // Updated query
 
-    // Simular envío sin texto
+    // Simulate clicking the button without text
     fireEvent.click(button);
     expect(mockDispatch).not.toHaveBeenCalled();
   });
@@ -93,7 +91,7 @@ describe("CommentSection Component", () => {
 
     render(<CommentSection />);
     const textarea = screen.getByPlaceholderText("Añadir un comentario...");
-    const button = screen.getByText(/comment/i);
+    const button = screen.getByRole('button', { name: /comment/i });  // Updated query
 
     fireEvent.change(textarea, { target: { value: "Comentario inválido" } });
     fireEvent.click(button);
