@@ -1,50 +1,38 @@
-import React, { useState } from "react";
+
 
 interface SearchBarProps {
-    onSearch: (name: string) => void;
+    placeholder?: string;
+    onSearch: (query: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
-    const [searchTerm, setSearchTerm] = useState("");
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setSearchTerm(value);
-        onSearch(value); // Llamar al filtro por nombre
-    };
+export const SearchBar = ({ placeholder = "Search or filter results", onSearch }: SearchBarProps) => {
 
     return (
-        <div className="flex items-center bg-gray-200 rounded-md px-4 py-2 mb-4">
+        <div className="relative w-full max-w-sm">
+            {/* Input de búsqueda */}
             <input
                 type="text"
-                placeholder="Search or filter results"
-                value={searchTerm}
-                onChange={handleInputChange}
-                className="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-500"
+                placeholder={placeholder}
+                className="w-full py-2 px-4 rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                onChange={(e) => onSearch(e.target.value)}
             />
-            <button
-                className="ml-2 text-gray-500 hover:text-gray-700"
-                onClick={() => {}}
-                disabled
-            >
-                {/* Ícono del filtro */}
+            {/* Icono de búsqueda */}
+            <div className="absolute top-1/2 transform -translate-y-1/2 right-3 text-gray-400">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke="currentColor"
                     strokeWidth={2}
+                    stroke="currentColor"
+                    className="w-5 h-5"
                 >
                     <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707l-6 6V20l-4 2v-9.293l-6-6A1 1 0 013 6V4z"
+                        d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 100-15 7.5 7.5 0 000 15z"
                     />
                 </svg>
-            </button>
+            </div>
         </div>
     );
 };
-
-export default SearchBar;

@@ -1,5 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../../hooks/redux";
+import { startSelectCharacter } from "../../../store/character/thunks";
+import { apolloClient } from "../../../apollo/apolloClient";
 // import {
 //     setDeleteStarredCharacters,
 //     setStarredCharacters,
@@ -18,22 +20,15 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     image,
     species,
 }) => {
-    // const [hoverItem, setHoverItem] = React.useState<boolean>(false);
-    // const starredCharacters = useAppSelector(
-    //     (state) => state.character.starredCharacters
-    // );
-    // const dispatch = useAppDispatch();
+    
+    const dispatch = useAppDispatch();
 
-    // const toggleStarredCharacter = () => {
-    //     if (starredCharacters?.includes(id)) {
-    //         dispatch(setDeleteStarredCharacters(id));
-    //     } else {
-    //         dispatch(setStarredCharacters(id));
-    //     }
-    // };
+    const onClickCharacter = () => {
+        dispatch(startSelectCharacter(apolloClient, { id }))
+    }
 
     return (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4" onClick={ onClickCharacter }>
             <img
                 className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
                 src={image}

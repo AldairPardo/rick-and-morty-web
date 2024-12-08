@@ -26,3 +26,14 @@ export const FILTER_CHARACTERS = gql`
         }
     }
 `;
+
+export const GET_CHARACTER_BY_ID = gql`
+    query GetCharacterById($getCharacterByIdId: Int!) {
+        getCharacterById(id: $getCharacterByIdId) {
+            name
+            image
+            status
+            species
+        }
+    }
+`;
