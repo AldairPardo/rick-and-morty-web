@@ -1,6 +1,6 @@
 import SidebarItem from "../sideBarItem";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { SearchBar } from "../filterBar";
+import { SearchBar } from "../searchBar";
 import { startLoadingCharacters } from "../../../store/character/thunks";
 import { apolloClient } from "../../../apollo/apolloClient";
 import { sortCharacters } from "../../../store/character/characterSlice";
