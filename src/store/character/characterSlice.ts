@@ -6,7 +6,15 @@ export interface Character {
   image: string;
   status: string;
   species: string;
-  isReferred: boolean;
+  isFavorite: boolean;
+  comments: Comment[];
+}
+
+export interface Comment {
+  id: number;
+  characterId: number;
+  comment: string;
+  createdAt: string;
 }
 
 interface CharacterState {
@@ -55,14 +63,20 @@ export const characterSlice = createSlice({
     markAsFavorite: (state, action: PayloadAction<number>) => {
       const characterIndex = state.characters.findIndex((character) => character.id === action.payload);
       if (characterIndex !== -1) {
-        state.characters[characterIndex].isReferred = !state.characters[characterIndex].isReferred;
+        state.characters[characterIndex].isFavorite = !state.characters[characterIndex].isFavorite;
         state.defaultCharacters = state.characters;
       }
+      if(state.activeCharacter && state.activeCharacter.id === action.payload) {
+        state.activeCharacter.isFavorite = !state.activeCharacter.isFavorite
+      }
     },
+    updateCharacterComments: (state, action: PayloadAction<Character>) => {
+      state.activeCharacter = action.payload;
+    }
   },
 });
 
-export const { setCharacters, setActiveCharacter, sortCharacters, markAsFavorite } =
+export const { setCharacters, setActiveCharacter, sortCharacters, markAsFavorite, updateCharacterComments } =
   characterSlice.actions;
 
 export default characterSlice.reducer;

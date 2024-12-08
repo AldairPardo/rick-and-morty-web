@@ -14,8 +14,8 @@ const Sidebar: React.FC = () => {
     );
 
     // Separar en favoritos y no favoritos
-    const favoriteCharacters = filteredCharacters.filter((character) => character.isReferred);
-    const nonFavoriteCharacters = filteredCharacters.filter((character) => !character.isReferred);
+    const favoriteCharacters = filteredCharacters.filter((character) => character.isFavorite);
+    const nonFavoriteCharacters = filteredCharacters.filter((character) => !character.isFavorite);
 
     const sortOrder = useAppSelector((state) => state.character.sort);
 
@@ -71,7 +71,7 @@ const Sidebar: React.FC = () => {
                     name={character.name}
                     species={character.species}
                     image={character.image}
-                    isReferred={character.isReferred}
+                    isFavorite={character.isFavorite}
                     />
                 </li>
                 ))}
@@ -87,7 +87,7 @@ const Sidebar: React.FC = () => {
                     name={character.name}
                     species={character.species}
                     image={character.image}
-                    isReferred={character.isReferred}
+                    isFavorite={character.isFavorite}
                     />
                 </li>
                 ))}

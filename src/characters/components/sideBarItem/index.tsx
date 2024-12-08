@@ -13,7 +13,7 @@ export interface SidebarItemProps {
     name: string;
     image: string;
     species: string;
-    isReferred: boolean;
+    isFavorite: boolean;
 }
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
@@ -21,7 +21,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     name,
     image,
     species,
-    isReferred,
+    isFavorite,
 }) => {
     
     const dispatch = useAppDispatch();
@@ -56,7 +56,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
                 <img
                 className=" h-4 w-4 "
                 src={
-                    isReferred? "/icons/hearth.svg"
+                    isFavorite? "/icons/hearth.svg"
                     : "/icons/hearthOutline.svg"
                 }
                 alt="hearth"

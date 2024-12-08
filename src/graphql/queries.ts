@@ -21,7 +21,7 @@ export const FILTER_CHARACTERS = gql`
             origin
             gender
             status
-            isReferred
+            isFavorite
             image
         }
     }
@@ -30,10 +30,16 @@ export const FILTER_CHARACTERS = gql`
 export const GET_CHARACTER_BY_ID = gql`
     query GetCharacterById($getCharacterByIdId: Int!) {
         getCharacterById(id: $getCharacterByIdId) {
+            id
             name
             image
             status
             species
+            isFavorite
+            comments {
+                comment
+                createdAt
+            }
         }
     }
 `;
@@ -41,8 +47,30 @@ export const GET_CHARACTER_BY_ID = gql`
 export const TOGGLE_FAVORITE = gql`
     mutation Mutation($characterId: Int!) {
         toggleFavorite(characterId: $characterId) {
-            isReferred
+            isFavorite
             id
+        }
+    }
+`;
+
+export const ADD_COMMENT = gql`
+    mutation AddComment($characterId: Int!, $comment: String!) {
+        addComment(characterId: $characterId, comment: $comment) {
+            id
+            image
+            name
+            status
+            species
+            gender
+            origin
+            isFavorite
+            comments {
+            id
+            characterId
+            comment
+            createdAt
+            updatedAt
+            }
         }
     }
 `;

@@ -1,6 +1,6 @@
 import { AppThunk } from "../store";
-import { FILTER_CHARACTERS, GET_CHARACTER_BY_ID, TOGGLE_FAVORITE } from "../../graphql/queries";
-import { markAsFavorite, setActiveCharacter, setCharacters } from "./characterSlice";
+import { ADD_COMMENT, FILTER_CHARACTERS, GET_CHARACTER_BY_ID, TOGGLE_FAVORITE } from "../../graphql/queries";
+import { markAsFavorite, setActiveCharacter, setCharacters, updateCharacterComments } from "./characterSlice";
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 
 export const startLoadingCharacters =
@@ -54,5 +54,27 @@ export const startToggleFavorite =
 
         } catch (error) {
             console.error("Error al marcar favorito:", error);
+        }
+    };
+
+export const startNewComment = 
+(apolloClient: ApolloClient<NormalizedCacheObject>, { id, comment }: { id:number, comment: string  }): AppThunk =>
+    async (dispatch) => {
+        try {
+            console.log('se va a crear un nuevo comentario',{
+                characterId: id,
+                comment: comment,
+            });
+            const { data } = await apolloClient.mutate({
+                mutation: ADD_COMMENT,
+                variables: {
+                    characterId: id,
+                    comment: comment,
+                },
+            });
+            console.log(data);
+            dispatch(updateCharacterComments(data.addComment));
+        } catch (error) {
+                console.error("Error al crear un nuevo comentario:", error);
         }
     };
