@@ -1,4 +1,3 @@
-import React from "react";
 import { useAppDispatch } from "../../../hooks/redux";
 import {
   startSelectCharacter,
@@ -26,6 +25,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   const dispatch = useAppDispatch();
 
   const onClickCharacter = () => {
+    console.log('alla va')
     dispatch(startSelectCharacter(apolloClient, { id }));
   };
 

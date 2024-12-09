@@ -73,9 +73,9 @@ const Sidebar: React.FC = () => {
       {favoriteCharacters.length > 0 && (
         <>
           {/* Lista de Favoritos */}
-          <h3 className="px-6 font-semibold my-4">
-            Starred Characters ({favoriteCharacters.length})
-          </h3>
+          <h4 className="text-gray-400 px-6 font-semibold my-4">
+            STARRED CHARACTERS ({favoriteCharacters.length})
+          </h4>
           <ul
             id="favorite"
             className="px-4 overflow-y-auto h-full max-h-[calc(35vh-2rem)] pb-4  scrollbar-thin scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-500"
@@ -95,9 +95,9 @@ const Sidebar: React.FC = () => {
               </li>
             ))}
           </ul>
-          <h3 className="px-6 font-semibold my-4">
-            Characters ({nonFavoriteCharacters.length})
-          </h3>
+          <h4 className="text-gray-400 px-6 font-semibold my-4">
+            CHARACTERS ({nonFavoriteCharacters.length})
+          </h4>
         </>
       )}
 

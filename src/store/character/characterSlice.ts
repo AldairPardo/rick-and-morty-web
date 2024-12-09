@@ -38,7 +38,7 @@ export const characterSlice = createSlice({
   initialState,
   reducers: {
     setCharacters: (state, action: PayloadAction<Character[]>) => {
-      // Carga la lista inicial de personajes
+      // Charge Characters
       state.characters = action.payload;
       state.defaultCharacters = action.payload;
       state.isLoading = false;

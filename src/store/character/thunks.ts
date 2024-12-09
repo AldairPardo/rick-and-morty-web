@@ -24,13 +24,14 @@ export const startSelectCharacter =
 (apolloClient: ApolloClient<NormalizedCacheObject>, { id }: { id: number }): AppThunk =>
     async (dispatch) => {
         try {
+            console.log('va a peticion')
             const { data } = await apolloClient.query({
                 query: GET_CHARACTER_BY_ID,
                 variables: {
                     getCharacterByIdId: id,
                 },
             });
-
+            console.log(data.getCharacterById);
             if (data && data.getCharacterById) {
                 dispatch(setActiveCharacter(data.getCharacterById));
             }

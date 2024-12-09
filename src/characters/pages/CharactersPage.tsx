@@ -8,7 +8,6 @@ import EmptyState from "../views/EmptyState";
 export const CharactersPage = () => {
   const dispatch = useAppDispatch();
 
-  // Selección del estado desde Redux
   const { activeCharacter } = useAppSelector((state) => state.character);
 
   const handleClose = () => {
@@ -17,7 +16,7 @@ export const CharactersPage = () => {
 
   return (
     <Layout>
-      {/* Renderiza la vista según si hay un personaje activo */}
+      {/* Render if exists an active Character */}
       {activeCharacter ? (
         <div
           className="h-full w-full px-[100px] sm:px-6 py-4  bg-white overflow-y-auto lg:block  "
