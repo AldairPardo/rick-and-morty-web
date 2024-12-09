@@ -64,7 +64,10 @@ export const characterSlice = createSlice({
       const characterIndex = state.characters.findIndex((character) => character.id === action.payload);
       if (characterIndex !== -1) {
         state.characters[characterIndex].isFavorite = !state.characters[characterIndex].isFavorite;
-        state.defaultCharacters = state.characters;
+        const defaultCharacterIndex = state.defaultCharacters.findIndex((character) => character.id === action.payload);
+        if(defaultCharacterIndex !== -1) {
+          state.defaultCharacters[defaultCharacterIndex].isFavorite = !state.defaultCharacters[defaultCharacterIndex].isFavorite;
+        }
       }
       if(state.activeCharacter && state.activeCharacter.id === action.payload) {
         state.activeCharacter.isFavorite = !state.activeCharacter.isFavorite

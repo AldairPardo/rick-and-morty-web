@@ -14,7 +14,7 @@ const Sidebar: React.FC = () => {
     (state) => state.character.characters
   );
 
-  // Separar en favoritos y no favoritos
+  // favorite and nonFavorite characters
   const favoriteCharacters = filteredCharacters.filter(
     (character) => character.isFavorite
   );
